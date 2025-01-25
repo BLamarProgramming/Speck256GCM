@@ -1,6 +1,7 @@
 use std::fs::read_to_string;
 use std::fs::File;
 use std::io::Write;
+use std::io::Result;
 
 
 // Read file into a byte vector that can then be encrypted or decrypted
@@ -11,8 +12,10 @@ pub fn read_file_into_byte_vec(path: &str) -> Vec<u8> {
 
 }
 // Writes file from byte vector (encrypted or decrypted)
-fn write_file_from_byte_vec(path: &str, bytes :Vec<u8>){
+pub fn write_file_from_byte_vec(path: &str, bytes :Vec<u8>) -> Result<()>{
     let mut file = File::create(path).expect("Failed to create file.");
-    file.write_all(&bytes).expect("Failed to write to file.");
-    file.flush().expect("Failed to flush file.")
+    for byte in bytes{
+        write!(file, "{:02x}", byte)?;
+    }
+    Ok(())
 }

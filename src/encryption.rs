@@ -18,7 +18,7 @@ pub fn expand_keys(key: &Vec<u64>) -> [u64; 34]{
     }
     return k_arr
 }
-fn words_to_bytes(words: &Vec<u64>) -> Vec<u8>{
+pub fn words_to_bytes(words: &Vec<u64>) -> Vec<u8>{
     let mut byte_vec: Vec<u8> = Vec::new();
     for &word in words{
         let eight_byte_piece = word.to_le_bytes();
@@ -26,7 +26,7 @@ fn words_to_bytes(words: &Vec<u64>) -> Vec<u8>{
     }
     return byte_vec
 }
-pub fn bytes_to_words(bytes: &Vec<u8>) -> Vec<u64>{
+pub fn bytes_to_words(bytes: Vec<u8>) -> Vec<u64>{
     bytes.chunks(8).map(|chunk| {
         let mut chunk_byte: [u8; 8] = [0; 8];
         chunk_byte.copy_from_slice(chunk);
